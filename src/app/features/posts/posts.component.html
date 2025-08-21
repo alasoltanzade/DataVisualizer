@@ -1,0 +1,14 @@
+<div class="container">
+  <span class="text fs-3 mb-4">{{ user?.name }}</span>
+
+  @for (post of posts; track post.id) {
+  <div class="card mb-2">
+    <div class="card-body">
+      <h3 class="title">{{ post.title }}</h3>
+      <p>{{ post.body }}</p>
+    </div>
+  </div>
+  }
+
+
+</div>
