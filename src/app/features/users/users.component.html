@@ -1,30 +1,31 @@
 <div class="container">
+  <div class="row">
+    <div class="col">
+      <input #searchBox type="text" class="search form-control mb-4" placeholder="Search..."
+        (input)="search(searchBox.value)" />
 
-  <input #searchBox type="text" class="search form-control mb-4" placeholder="Search..."
-    (input)="search(searchBox.value)" />
-
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th class="title">Username</th>
-        <th class="title">Name</th>
-        <th class="title">Email</th>
-        <th class="title">City</th>
-        <th class="title">Company</th>
-        <th class="title">Phone</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of filteredUsers$ | async" (click)="goToPosts(user.id)" style="cursor:pointer">
-        <td>{{ user.username }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.address.city }}</td>
-        <td>{{ user.company.name }}</td>
-        <td>{{ user.phone }}</td>
-      </tr>
-    </tbody>
-  </table>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="title">Username</th>
+            <th class="title">Name</th>
+            <th class="title">Email</th>
+            <th class="title">City</th>
+            <th class="title">Company</th>
+            <th class="title">Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers$ | async" (click)="goToPosts(user.id)" style="cursor:pointer">
+            <td>{{ user.username }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.address.city }}</td>
+            <td>{{ user.company.name }}</td>
+            <td>{{ user.phone }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-

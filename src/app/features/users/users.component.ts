@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { map, startWith } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../core/models/user.model';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { JsonPlaceholderService } from '../../core/services/jsonplaceholder.service';
+import { UserSearchService } from '../../core/services/userSearch.service';
 
 @Component({
   selector: 'app-users',
@@ -19,6 +20,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private service: JsonPlaceholderService,
+    private searchService: UserSearchService,
     private router: Router
   ) {}
 
@@ -28,24 +30,7 @@ export class UsersComponent implements OnInit {
     this.filteredUsers$ = combineLatest([
       this.users$,
       this.searchTerm$.pipe(startWith('')),
-    ]).pipe(
-      map(([users, term]) => {
-        term = term.toLowerCase();
-        if (term.length < 2) return users;
-
-        return users.filter((u) => {
-          const searchable = `
-            ${u.username}
-            ${u.name}
-            ${u.email}
-            ${u.address?.city}
-            ${u.company?.name}
-            ${u.phone}
-          `.toLowerCase();
-          return searchable.includes(term);
-        });
-      })
-    );
+    ]).pipe(map(([users, term]) => this.searchService.filter(users, term)));
   }
 
   search(term: string) {

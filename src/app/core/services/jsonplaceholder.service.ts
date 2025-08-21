@@ -5,10 +5,8 @@ import { Post } from '../models/post.model';
 import { PostComment } from '../models/comment.model';
 import { User } from '../models/user.model';
 
+@Injectable({ providedIn: 'root' })
 
-@Injectable({
-  providedIn: 'root',
-})
 export class JsonPlaceholderService {
   private baseUrl = 'https://jsonplaceholder.typicode.com';
 
