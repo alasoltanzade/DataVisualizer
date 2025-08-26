@@ -57,3 +57,9 @@
   border-radius: 85px;
   background: #1d287a;
 }
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; 
+}

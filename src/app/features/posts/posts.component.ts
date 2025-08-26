@@ -21,13 +21,16 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const userId = Number(this.route.snapshot.paramMap.get('id'));
-    this.service
-      .getPostsByUser(userId)
-      .subscribe((posts) => (this.posts = posts));
+    this.route.paramMap.subscribe((params) => {
+      const userId = Number(params.get('id'));
 
-    this.service.getUserById(userId).subscribe((user) => {
-      this.user = user;
+      this.service
+        .getPostsByUser(userId)
+        .subscribe((posts) => (this.posts = posts));
+
+      this.service.getUserById(userId).subscribe((user) => {
+        this.user = user;
+      });
     });
   }
 }

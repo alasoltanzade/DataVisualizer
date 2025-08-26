@@ -13,10 +13,11 @@ import { UserSearchService } from '../../core/services/userSearch.service';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
+
 export class UsersComponent implements OnInit {
-  users$!: Observable<User[]>;
-  filteredUsers$!: Observable<User[]>;
-  private searchTerm$ = new BehaviorSubject<string>('');
+  users!: Observable<User[]>;
+  filteredUsers!: Observable<User[]>;
+  private searchTerm = new BehaviorSubject<string>('');
 
   constructor(
     private service: JsonPlaceholderService,
@@ -25,16 +26,16 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.users$ = this.service.getUsers();
+    this.users = this.service.getUsers();
 
-    this.filteredUsers$ = combineLatest([
-      this.users$,
-      this.searchTerm$.pipe(startWith('')),
+    this.filteredUsers = combineLatest([
+      this.users,
+      this.searchTerm.pipe(startWith('')),
     ]).pipe(map(([users, term]) => this.searchService.filter(users, term)));
   }
 
   search(term: string) {
-    this.searchTerm$.next(term);
+    this.searchTerm.next(term);
   }
 
   goToPosts(userId: number) {

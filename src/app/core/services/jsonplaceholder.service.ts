@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { Observable, forkJoin, map, of, switchMap } from 'rxjs';
 import { Post } from '../models/post.model';
 import { PostComment } from '../models/comment.model';
 import { User } from '../models/user.model';
+import { environment } from '../../../environment';
 
 @Injectable({ providedIn: 'root' })
 
 export class JsonPlaceholderService {
-  private baseUrl = 'https://jsonplaceholder.typicode.com';
+  private readonly baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -40,7 +41,7 @@ export class JsonPlaceholderService {
             switchMap((posts) =>
               posts.length
                 ? forkJoin(posts.map((p) => this.getCommentsByPost(p.id)))
-                : [[]]
+                : of([] as PostComment[][])
             ),
             map((commentsArrays) => {
               const allComments = commentsArrays.flat();
